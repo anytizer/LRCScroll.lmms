@@ -25,10 +25,14 @@ namespace lmms
             ~LRCScroll();
 
             QString nodeName() const override;
-			void saveSettings(QDomDocument&, QDomElement&) override {}
-			void loadSettings(const QDomElement&) override {}
+			void saveSettings(QDomDocument&, QDomElement&) override;
+			void loadSettings(const QDomElement&) override;
 
 			PluginView* instantiateView(QWidget*) override;
+        
+        private:
+            QString lyrics = "";
+            //friend class gui::LRCScrollView;
     };
 }
 

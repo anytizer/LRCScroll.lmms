@@ -21,7 +21,7 @@ namespace lmms
         LRCScrollView::LRCScrollView(LRCScroll* plugin): ToolPluginView(plugin), m_plugin(plugin)
         {
             int width = 500;
-            int height = 500;
+            int height = 300;
             
             this->clearLayout();
             TimestampEditor* tse = new TimestampEditor(nullptr);
@@ -29,22 +29,21 @@ namespace lmms
             //tse->setFixedHeight(height);
             this->layout->addWidget(tse);
             this->setLayout(this->layout);
-            //tse->show();
+            //this->setStyleSheet("QPlainTextEdit { background-color: rgba(255, 255, 255, 0); }");
 
-			this->hide();
-			this->setFixedSize(width + 20, height + 20);
+            this->hide();
+			this->setFixedSize(width + 20, height);
 			QWidget* parent = parentWidget();
 			if(parent!=nullptr)
 			{
                 parent->hide();
-				parent->resize(width+20, height+20);
+				parent->resize(width, height);
 				Qt::WindowFlags flags = parent->windowFlags();
 				flags |= Qt::MSWindowsFixedSizeDialogHint;
 				flags &= ~Qt::WindowMaximizeButtonHint;
 				flags |= Qt::WindowStaysOnTopHint;
 				parent->setWindowFlags(flags);
             }
-
         }
 
         LRCScrollView::~LRCScrollView()

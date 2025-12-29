@@ -26,7 +26,10 @@ namespace lmms
     {
         TimestampEditor::TimestampEditor(QWidget *parent = nullptr)
         {
+            QFont font("Consolas", 18);
+
             this->editor = new QPlainTextEdit(this);
+            this->editor->setFont(font);
             this->editor->setPlaceholderText("Lyrics here...");
             
             this->btn = new QPushButton("Start &Tagging", this);
