@@ -1,3 +1,8 @@
+/**
+ * LRCScroll.h
+ * (c) 2026 Bimal Poudel <@anytizer:github>
+ */
+
 #ifndef LMMS_PLUGINS_LRCSCROLL_LRCSCROLL_H
 #define LMMS_PLUGINS_LRCSCROLL_LRCSCROLL_H
 

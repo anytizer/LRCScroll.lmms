@@ -1,3 +1,8 @@
+/**
+ * TimestampEditor.cpp
+ * (c) 2026 Bimal Poudel <@anytizer:github>
+ */
+
 #ifndef LMMS_PLUGINS_LRCSCROLL_TIMESTAMPEDITOR_CPP
 #define LMMS_PLUGINS_LRCSCROLL_TIMESTAMPEDITOR_CPP
 
