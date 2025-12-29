@@ -3,10 +3,6 @@
 
 #include <QWidget>
 #include <QDomDocument>
-#include <QTextCursor>
-#include <QElapsedTimer>
-#include <QPlainTextEdit>
-#include <QPushButton>
 #include <QString>
 
 #include "ToolPlugin.h"
@@ -28,19 +24,6 @@ namespace lmms
 			void loadSettings(const QDomElement&) override {}
 
 			PluginView* instantiateView(QWidget*) override;
-
-        private slots:
-            void insertElapsed();
-            
-        private:
-            
-            Q_OBJECT
-            
-            QPlainTextEdit *editor;
-            QPushButton *btn;
-            QElapsedTimer timer;
-    
-            QString getCurrentLine(QTextCursor cursor);
     };
 }
 

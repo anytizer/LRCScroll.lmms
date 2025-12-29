@@ -1,23 +1,27 @@
 #ifndef LMMS_PLUGINS_LRCSCROLL_LRCSCROLLVIEW_H
 #define LMMS_PLUGINS_LRCSCROLL_LRCSCROLLVIEW_H
 
-#include "LRCScrollView.h"
 #include "LRCScroll.h"
+#include "LRCScrollView.h"
 
-namespace lmms::gui
+#include "ToolPluginView.h"
+
+namespace lmms
 {
-    using lmms::LRCScroll;
-    
-    class LRCScrollView: public ToolPluginView
+    namespace gui
     {
-        private:
-			Q_OBJECT
+        class LRCScrollView: public ToolPluginView
+        {
+            private:
+                Q_OBJECT
 
-			LRCScroll* m_plugin;
-        
-        public:
-            LRCScrollView(LRCScroll* plugin);
-    };
+                LRCScroll* m_plugin;
+            
+            public:
+                LRCScrollView(LRCScroll* plugin);
+                ~LRCScrollView();
+        };
+    }
 }
 
 #endif // LMMS_PLUGINS_LRCSCROLL_LRCSCROLLVIEW_H

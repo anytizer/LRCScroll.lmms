@@ -9,6 +9,12 @@
 #include "embed.h"
 #include "plugin_export.h"
 
+#include "ToolPluginView.h"
+
+using lmms::ToolPlugin;
+using lmms::gui::PluginView;
+using lmms::gui::LRCScrollView;
+
 namespace lmms
 {
     extern "C"

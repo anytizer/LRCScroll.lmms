@@ -4,17 +4,21 @@
 #include "LRCScroll.h"
 #include "LRCScrollView.h"
 
-namespace lmms::gui
+namespace lmms
 {
-    using lmms::LRCScroll;
-    
-    LRCScrollView::LRCScrollView(LRCScroll* plugin)
-		: ToolPluginView(plugin),
-		m_plugin(plugin)
-	{
-    }
+    namespace gui
+    {
+        using lmms::LRCScroll;
+        
+        LRCScrollView::LRCScrollView(LRCScroll* plugin): ToolPluginView(plugin), m_plugin(plugin)
+        {
+        }
 
+        LRCScrollView::~LRCScrollView()
+        {
+
+        }
+    }
 }
 
-
-#endif LMMS_PLUGINS_LRCSCROLL_LRCSCROLLVIEW_CPP
+#endif // LMMS_PLUGINS_LRCSCROLL_LRCSCROLLVIEW_CPP

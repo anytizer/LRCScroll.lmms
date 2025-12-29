@@ -1,7 +1,7 @@
 INCLUDE(BuildPlugin)
 
 BUILD_PLUGIN(
-  LRCScroll
+  lrcscroll
     LRCScroll.cpp
     LRCScrollView.cpp
     TimestampEditor.cpp
