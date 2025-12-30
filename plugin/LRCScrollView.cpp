@@ -29,10 +29,10 @@ namespace lmms
             //tse->setFixedHeight(height);
             this->layout->addWidget(tse);
             this->setLayout(this->layout);
-            //this->setStyleSheet("QPlainTextEdit { background-color: rgba(255, 255, 255, 0); }");
+            this->setWindowOpacity(.3);
 
             this->hide();
-			this->setFixedSize(width + 20, height);
+			this->setFixedSize(width + 40, height + 40);
 			QWidget* parent = parentWidget();
 			if(parent!=nullptr)
 			{
@@ -49,6 +49,38 @@ namespace lmms
         LRCScrollView::~LRCScrollView()
         {
 
+        }
+
+        void LRCScrollView::focusInEvent(QFocusEvent *event)
+        {
+            Q_UNUSED(event);
+            qDebug() << "Window gained focus. Changing to framed.";
+        }
+
+        void LRCScrollView::focusOutEvent(QFocusEvent *event)
+        {
+            Q_UNUSED(event);
+            qDebug() << "Window lost focus. Changing to frameless.";
+        }
+
+        void LRCScrollView::changeEvent(QEvent *event)
+        {
+            // QWidget* parent = parentWidget();
+            // if (event->type() == QEvent::ActivationChange)
+            // {
+            //     if (parent->isActiveWindow())
+            //     {
+            //         // Fully opaque when focused
+            //         parent->setWindowOpacity(1.0);
+            //         this->setWindowOpacity(1.0);
+            //     }
+            //     else
+            //     {
+            //         // Transparent when focus is lost (e.g., 50% opacity)
+            //         parent->setWindowOpacity(0.3);
+            //         this->setWindowOpacity(0.3);
+            //     }
+            // }
         }
 
         void LRCScrollView::closeEvent(QCloseEvent* event)

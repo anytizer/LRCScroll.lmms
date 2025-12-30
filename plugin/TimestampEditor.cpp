@@ -27,13 +27,17 @@ namespace lmms
     {
         TimestampEditor::TimestampEditor(QWidget *parent = nullptr)
         {
-            QFont font("Consolas", 18);
+            QFont font("Consolas", 16);
 
             this->editor = new QPlainTextEdit(this);
             this->editor->setFont(font);
             this->editor->setPlainText("[00:00.00] Press F9 here...");
             this->editor->setPlaceholderText("[00:00.00] Press F9 here...");
             this->editor->setContextMenuPolicy(Qt::NoContextMenu);
+
+            QPalette p = this->editor->palette();
+            p.setColor(QPalette::Text, Qt::magenta);
+            this->editor->setPalette(p);
             
             this->btn = new QPushButton("Start &Tagging", this);
             
@@ -54,7 +58,7 @@ namespace lmms
         {
             if(event->key() == Qt::Key_F9)
             {
-                // qDebug() << "F9 key pressed!";
+                qDebug() << "F9 key pressed!";
                 
                 this->insertElapsed();        
                 event->accept();
@@ -71,7 +75,7 @@ namespace lmms
             cursor.select(QTextCursor::BlockUnderCursor);
             QString line = cursor.selectedText().trimmed();
             
-            // throw out ts signature timestamp
+            // throw out signature timestamp
             line.replace(QRegularExpression("^\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\]\\s+"), "");
             return line.trimmed();
         }
@@ -115,18 +119,20 @@ namespace lmms
             
             // Replace with New Timestamp + Cleaned Lyrics (no extra newlines)
             cursor.insertText(ts + cleanLineText);
+            cursor.endEditBlock();
 
             cursor.movePosition(QTextCursor::NextBlock); // advance to new line if available
             
-            cursor.endEditBlock();
-        
             // 3. Restore cursor position
             // Move to start of block, then move right by (timestamp length + original relative position)
-            cursor.movePosition(QTextCursor::StartOfBlock);
-            cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, ts.length() + relativePosInLyrics);
+            //cursor.movePosition(QTextCursor::StartOfBlock);
+            //cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, ts.length() + relativePosInLyrics);
+            // it won't bother in which position the cursor is.
             
             editor->setTextCursor(cursor);
             editor->setFocus();
+
+            // @todo Last line of the text is getting a double timestamp signatures
         }
     }
 }
