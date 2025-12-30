@@ -9,3 +9,16 @@ make
 
 ./LRCScroll
 ```
+
+## Features / Progress
+
+* [x] Prominent color, font and sizing
+* [x] Copy-paste shortcuts enabled
+* [x] Press F9 key to place timestamp in front of the line
+* [ ] Reset timer with a button to re-tag
+* [ ] Scroll the text in:
+  * [ ] transparent window
+  * [ ] frmeless window
+  * [ ] readonly text
+  * [ ] Hover on hide scroller
+* [ ] Button changes the text to tag current line or start a tag
