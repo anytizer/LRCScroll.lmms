@@ -6,6 +6,7 @@
 #ifndef LMMS_PLUGINS_LRCSCROLL_TIMESTAMPEDITOR_CPP
 #define LMMS_PLUGINS_LRCSCROLL_TIMESTAMPEDITOR_CPP
 
+#include <Qt>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -30,7 +31,9 @@ namespace lmms
 
             this->editor = new QPlainTextEdit(this);
             this->editor->setFont(font);
-            this->editor->setPlaceholderText("Lyrics here...");
+            this->editor->setPlainText("[00:00.00] Press F9 here...");
+            this->editor->setPlaceholderText("[00:00.00] Press F9 here...");
+            this->editor->setContextMenuPolicy(Qt::NoContextMenu);
             
             this->btn = new QPushButton("Start &Tagging", this);
             
@@ -67,10 +70,9 @@ namespace lmms
         QString TimestampEditor::getCurrentLine(QTextCursor cursor)
         {
             cursor.select(QTextCursor::BlockUnderCursor);
-            const QRegularExpression regex("\\[\\d{2}:\\d{2}\\.\\d{2,}\\] ?");
-            QString line = cursor.selectedText();
-            line.replace(regex, ""); // throw ts signature
-            return line;
+            QString line = cursor.selectedText().trimmed();
+            line.replace(QRegularExpression("^\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\]\\s+"), ""); // throw ts signature
+            return line.trimmed();
         }
         
         void TimestampEditor::insertElapsed()
