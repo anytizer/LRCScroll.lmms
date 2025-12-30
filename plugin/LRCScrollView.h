@@ -8,10 +8,12 @@
 
 #include "LRCScroll.h"
 #include "LRCScrollView.h"
+#include "TimestampEditor.h"
 
 #include "ToolPluginView.h"
 
 #include <QHBoxLayout>
+#include <QCloseEvent>
 
 namespace lmms
 {
@@ -24,12 +26,17 @@ namespace lmms
 
                 LRCScroll* m_plugin;
                 QHBoxLayout* layout = new QHBoxLayout();
+                
+                TimestampEditor* tse = new TimestampEditor(nullptr);
 
                 void clearLayout();
             
             public:
                 LRCScrollView(LRCScroll* plugin);
                 ~LRCScrollView();
+            
+            protected:
+                void closeEvent(QCloseEvent* event) override;
         };
     }
 }

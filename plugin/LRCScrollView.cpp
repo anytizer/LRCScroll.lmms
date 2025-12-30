@@ -24,7 +24,7 @@ namespace lmms
             int height = 300;
             
             this->clearLayout();
-            TimestampEditor* tse = new TimestampEditor(nullptr);
+            
             //tse->setFixedWidth(width);
             //tse->setFixedHeight(height);
             this->layout->addWidget(tse);
@@ -49,6 +49,12 @@ namespace lmms
         LRCScrollView::~LRCScrollView()
         {
 
+        }
+
+        void LRCScrollView::closeEvent(QCloseEvent* event)
+        {
+            this->tse->stopTimer();
+            qDebug() << "Timer stopped!";
         }
 
         void LRCScrollView::clearLayout()

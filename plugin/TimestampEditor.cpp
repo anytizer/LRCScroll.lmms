@@ -54,24 +54,25 @@ namespace lmms
         {
             if(event->key() == Qt::Key_F9)
             {
-                qDebug() << "F9 key pressed!";
+                // qDebug() << "F9 key pressed!";
                 
                 this->insertElapsed();        
                 event->accept();
             }
         }
-        
-        
-        void TimestampEditor::closeEvent(QCloseEvent* event)
+
+        void TimestampEditor::stopTimer()
         {
-            qDebug() << "Application closed.";
+            this->timer = QElapsedTimer();
         }
         
         QString TimestampEditor::getCurrentLine(QTextCursor cursor)
         {
             cursor.select(QTextCursor::BlockUnderCursor);
             QString line = cursor.selectedText().trimmed();
-            line.replace(QRegularExpression("^\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\]\\s+"), ""); // throw ts signature
+            
+            // throw out ts signature timestamp
+            line.replace(QRegularExpression("^\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\]\\s+"), "");
             return line.trimmed();
         }
         
@@ -114,6 +115,8 @@ namespace lmms
             
             // Replace with New Timestamp + Cleaned Lyrics (no extra newlines)
             cursor.insertText(ts + cleanLineText);
+
+            cursor.movePosition(QTextCursor::NextBlock); // advance to new line if available
             
             cursor.endEditBlock();
         

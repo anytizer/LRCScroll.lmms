@@ -23,10 +23,11 @@ namespace lmms
             public:
                 TimestampEditor(QWidget *parent);
                 void setLyrics(QString lyrics);
+                void stopTimer();
                 
             protected:
                 void keyPressEvent(QKeyEvent* event) override;
-                void closeEvent(QCloseEvent* event) override;
+                //void closeEvent(QCloseEvent* event) override;
                 
             private slots:
                 void insertElapsed();
