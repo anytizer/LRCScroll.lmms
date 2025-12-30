@@ -1,6 +1,4 @@
-# README
-
-Running as a standalone application:
+# As a standalone application:
 
 ```
 mkdir build
