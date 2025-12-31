@@ -1,6 +1,6 @@
 # As a standalone application:
 
-```
+```c++
 mkdir build
 
 cd build
@@ -9,6 +9,12 @@ make
 
 ./LRCScroll
 ```
+
+## How does it work?
+
+<video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
+
+An explainer recording.
 
 ## Features / Progress
 
@@ -22,7 +28,3 @@ make
   * [ ] readonly text
   * [ ] Hover on hide scroller
 * [ ] Button changes the text to tag current line or start a tag
-
-## How does it work?
-<video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
-An explainer recording.
