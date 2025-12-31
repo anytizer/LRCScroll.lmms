@@ -1,6 +1,12 @@
+## How does it work?
+
+<video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
+
+An explainer recording. See it in full-screen mode.
+
 # As a standalone application:
 
-```c++
+```
 mkdir build
 
 cd build
@@ -9,12 +15,6 @@ make
 
 ./LRCScroll
 ```
-
-## How does it work?
-
-<video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
-
-An explainer recording.
 
 ## Features / Progress
 
