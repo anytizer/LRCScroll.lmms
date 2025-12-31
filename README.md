@@ -24,5 +24,5 @@ make
 * [ ] Button changes the text to tag current line or start a tag
 
 ## How does it work?
-[lrc-in-progress.webm](https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe)
+<video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
 An explainer recording.
