@@ -58,9 +58,16 @@ namespace lmms
         {
             if(event->key() == Qt::Key_F9)
             {
+                if(event->modifiers() == Qt::ControlModifier)
+                {
+                    // Ctrl+F9 restarts the timer
+                    // @todo Prevent abuse of the modifier key
+                    this->timer.restart();
+                }
+
                 qDebug() << "F9 key pressed!";
                 
-                this->insertElapsed();        
+                this->insertElapsed();
                 event->accept();
             }
         }

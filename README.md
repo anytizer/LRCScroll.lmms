@@ -28,3 +28,6 @@ An explainer recording.
   * [ ] readonly text
   * [ ] Hover on hide scroller
 * [ ] Button changes the text to tag current line or start a tag
+
+## Resources
+* https://en.wikipedia.org/wiki/LRC_(file_format)

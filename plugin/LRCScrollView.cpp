@@ -20,8 +20,8 @@ namespace lmms
         
         LRCScrollView::LRCScrollView(LRCScroll* plugin): ToolPluginView(plugin), m_plugin(plugin)
         {
-            int width = 500;
-            int height = 300;
+            int width = 600;
+            int height = 400;
             
             this->clearLayout();
             
@@ -32,14 +32,14 @@ namespace lmms
             this->setWindowOpacity(.3);
 
             this->hide();
-			this->setFixedSize(width + 40, height + 40);
+			this->setFixedSize(width, height);
 			QWidget* parent = parentWidget();
 			if(parent!=nullptr)
 			{
                 parent->hide();
 				parent->resize(width, height);
 				Qt::WindowFlags flags = parent->windowFlags();
-				flags |= Qt::MSWindowsFixedSizeDialogHint;
+				//flags |= Qt::MSWindowsFixedSizeDialogHint;
 				flags &= ~Qt::WindowMaximizeButtonHint;
 				flags |= Qt::WindowStaysOnTopHint;
 				parent->setWindowFlags(flags);
@@ -86,7 +86,7 @@ namespace lmms
         void LRCScrollView::closeEvent(QCloseEvent* event)
         {
             this->tse->stopTimer();
-            qDebug() << "Timer stopped!";
+            qDebug() << "LRC Timer should be stopped!";
         }
 
         void LRCScrollView::clearLayout()
