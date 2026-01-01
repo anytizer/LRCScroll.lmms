@@ -22,7 +22,7 @@ make
 
 ## As a plugin
 
-@see plugin/ folder
+@see [plugin/](plugin/) folder
 
 ## Features / Progress
 
@@ -42,7 +42,7 @@ make
 * [ ] Press __F10 key__ to start the scroller.
 * [ ] Focused in/out event handled
 * [ ] Synchronized with song editor or song.h
-* [ ] Sommoth scroll at 30 fps, slow and easy to eyes
+* [ ] Smooth scroll at 30 fps, slow and easy to eyes
 * [ ] Complete lyrics scroll
 * [ ] Current timestamp to be highlighted
 
