@@ -24,7 +24,7 @@ make
 * [ ] Reset timer with a button to re-tag
 * [ ] Scroll the text in:
   * [ ] transparent window
-  * [ ] frmeless window
+  * [ ] frameless window scroll
   * [ ] readonly text
   * [ ] Hover on hide scroller
 * [ ] Button changes the text to tag current line or start a tag

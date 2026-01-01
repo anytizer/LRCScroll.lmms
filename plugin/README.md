@@ -1,4 +1,4 @@
-# As a plugin for LMMS:
+# As a plugin for LMMS
 
 ```
 cd lmms/plugins

@@ -19,6 +19,7 @@
 #include <QKeyEvent>
 #include <QRegularExpression>
 
+#include "VerticalMarquee.h"
 #include "TimestampEditor.h"
 
 namespace lmms
@@ -56,8 +57,20 @@ namespace lmms
         
         void TimestampEditor::keyPressEvent(QKeyEvent* event)
         {
-            if(event->key() == Qt::Key_F9)
+            switch (event->key())
             {
+            case Qt::Key_F10:
+                // scroll the lyrics
+                marquee->resize(600, 250);
+                marquee->setWindowTitle("LRCScroll");
+                //marquee->setText(this->getWholeLyricsOnly());
+                marquee->setText("This is a custom vertical scrolling message!\nMultilined text!\n\nWish somebody happy birthday!\nThis evening.");
+                marquee->show();
+                
+                qDebug() << "F10 key pressed! Activating LRCScroll.";
+                event->accept();
+                break;
+            case Qt::Key_F9:
                 if(event->modifiers() == Qt::ControlModifier)
                 {
                     // Ctrl+F9 restarts the timer
@@ -69,12 +82,22 @@ namespace lmms
                 
                 this->insertElapsed();
                 event->accept();
+
+            default:
+                break;
             }
+
         }
 
         void TimestampEditor::stopTimer()
         {
             this->timer = QElapsedTimer();
+        }
+
+        QString TimestampEditor::getWholeLyricsOnly()
+        {
+            QString lyrics = "Happy birthday to you"; //editor->getPlainText();
+            return lyrics;
         }
         
         QString TimestampEditor::getCurrentLine(QTextCursor cursor)

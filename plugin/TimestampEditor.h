@@ -14,6 +14,8 @@
 #include <QCloseEvent>
 #include <QTextCursor>
 
+#include "VerticalMarquee.h"
+
 namespace lmms
 {
     namespace gui
@@ -39,6 +41,9 @@ namespace lmms
                 QPushButton *btn;
                 QElapsedTimer timer;
                 QString getCurrentLine(QTextCursor cursor);
+                QString getWholeLyricsOnly(); // whole text without timestamp
+
+                VerticalMarquee* marquee = new VerticalMarquee();
         };
     }
 }

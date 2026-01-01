@@ -14,7 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 # 3. Define the executable and its source files
-add_executable(test main.cpp TextScrollerWidget.cpp TextScrollerWidget.h)
+#add_executable(test main.cpp TextScrollerWidget.cpp TextScrollerWidget.h)
+add_executable(test main.cpp VerticalMarquee.cpp VerticalMarquee.h)
 
 # 4. Link the Qt libraries to your executable
 target_link_libraries(test PRIVATE Qt6::Widgets)
