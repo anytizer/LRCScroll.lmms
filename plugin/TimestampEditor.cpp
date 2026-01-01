@@ -28,7 +28,7 @@ namespace lmms
     {
         TimestampEditor::TimestampEditor(QWidget *parent = nullptr)
         {
-            QFont font("Consolas", 16);
+            QFont font("Consolas", 18);
 
             this->editor = new QPlainTextEdit(this);
             this->editor->setFont(font);
@@ -59,17 +59,23 @@ namespace lmms
         {
             switch (event->key())
             {
-            case Qt::Key_F10:
-                // scroll the lyrics
-                marquee->resize(600, 250);
-                marquee->setWindowTitle("LRCScroll");
-                //marquee->setText(this->getWholeLyricsOnly());
-                marquee->setText("This is a custom vertical scrolling message!\nMultilined text!\n\nWish somebody happy birthday!\nThis evening.");
-                marquee->show();
+            // case Qt::Key_F10:
+            //     // scroll the lyrics
+            //     marquee->resize(600, 250);
+            //     marquee->setWindowTitle("LRCScroll");
+            //     //marquee->setText(this->getWholeLyricsOnly());
+            //     marquee->setText(
+            //         "This is a custom vertical scrolling message!"
+            //         "\nMultilined text!"
+            //         "\n"
+            //         "\nWish somebody happy birthday!"
+            //         "\nThis evening."
+            //     );
+            //     marquee->show();
                 
-                qDebug() << "F10 key pressed! Activating LRCScroll.";
-                event->accept();
-                break;
+            //     qDebug() << "F10 key pressed! Activating LRCScroll.";
+            //     event->accept();
+            //     break;
             case Qt::Key_F9:
                 if(event->modifiers() == Qt::ControlModifier)
                 {

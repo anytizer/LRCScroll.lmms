@@ -41,6 +41,7 @@ namespace lmms
                 void focusInEvent(QFocusEvent* event) override;
                 void focusOutEvent(QFocusEvent* event) override;
                 void changeEvent(QEvent *event) override;
+                void keyPressEvent(QKeyEvent* event) override;
         };
     }
 }

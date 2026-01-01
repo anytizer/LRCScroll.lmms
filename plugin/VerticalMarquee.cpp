@@ -32,7 +32,11 @@ namespace lmms
 
             // Reset position if the text has completely scrolled off the top
             // We use fontMetrics to calculate the height of the text block
-            int textHeight = fontMetrics().height();
+            
+            // multipleid by line numbers
+            // count of "\n" in the string + 1
+            int textHeight = fontMetrics().height() * 5;
+
             if (yOffset < -textHeight) {
                 yOffset = height();
             }

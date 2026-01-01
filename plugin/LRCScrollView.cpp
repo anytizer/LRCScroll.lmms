@@ -8,6 +8,7 @@
 
 #include "LRCScroll.h"
 #include "LRCScrollView.h"
+#include "VerticalMarquee.h"
 #include "TimestampEditor.h"
 
 #include <QLayoutItem>
@@ -101,6 +102,25 @@ namespace lmms
                     item->widget()->deleteLater();
                 }
                 delete item;
+            }
+        }
+
+        void LRCScrollView::keyPressEvent(QKeyEvent* event)
+        {
+            if(event->key() == Qt::Key_F10)
+            {
+                VerticalMarquee* marquee = new VerticalMarquee();
+                marquee->resize(500, 200);
+                marquee->setWindowTitle("LRCScroll");
+                //marquee->setText(this->getWholeLyricsOnly());
+                marquee->setText(
+                    "Happy birthday to you!"
+                    "\nHappy birthday to you!"
+                    "\n"
+                    "\nHappy birthday dear ..."
+                    "\nHappy birthday to you!"
+                );
+                marquee->show();
             }
         }
     }
