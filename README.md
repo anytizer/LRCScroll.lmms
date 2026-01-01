@@ -6,7 +6,9 @@ An explainer recording. See it in full-screen mode.
 ## Smooth Scroller
 <video src="https://github.com/user-attachments/assets/dd6a8a89-4170-4827-9254-261d21dddf94"></video>
 
-# As a standalone application:
+# Compiling
+
+## As a standalone application
 
 ```
 mkdir build
@@ -18,11 +20,15 @@ make
 ./LRCScroll
 ```
 
+## As a plugin
+
+@see plugin/ folder
+
 ## Features / Progress
 
 * [x] Prominent color, font and sizing
 * [x] Copy-paste shortcuts enabled
-* [x] Press F9 key to place timestamp in front of the line
+* [x] Press __F9 key__ to place timestamp in front of the line
 * [ ] Reset timer with a button to re-tag
 * [ ] Scroll the text in:
   * [ ] transparent window
@@ -30,6 +36,15 @@ make
   * [ ] readonly text
   * [ ] Hover on hide scroller
 * [ ] Button changes the text to tag current line or start a tag
+
+## Scroller Features
+
+* [ ] Press __F10 key__ to start the scroller.
+* [ ] Focused in/out event handled
+* [ ] Synchronized with song editor or song.h
+* [ ] Sommoth scroll at 30 fps, slow and easy to eyes
+* [ ] Complete lyrics scroll
+* [ ] Current timestamp to be highlighted
 
 ## Resources
 * https://en.wikipedia.org/wiki/LRC_(file_format)
