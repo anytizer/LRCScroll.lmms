@@ -1,8 +1,10 @@
 ## How does it work?
 
 <video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
-
 An explainer recording. See it in full-screen mode.
+
+## Smooth Scroller
+<video src="https://github.com/user-attachments/assets/dd6a8a89-4170-4827-9254-261d21dddf94"></video>
 
 # As a standalone application:
 
