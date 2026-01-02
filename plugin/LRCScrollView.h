@@ -32,10 +32,10 @@ namespace lmms
 
                 LRCScroll* m_plugin;
                 QHBoxLayout* layout = new QHBoxLayout();
-                QStackedWidget* stack; //  = new QStackedWidget();
+                QStackedWidget* stack;
                 
                 // stacked widgets
-                TimestampEditor* tse;// = new TimestampEditor(nullptr);
+                TimestampEditor* tse;
                 VerticalMarquee* marquee;
 
                 QString getText();
@@ -52,13 +52,14 @@ namespace lmms
                 ~LRCScrollView();
                 
                 void show(int index); // widget sequence in the stack
-                void animate(); // show scroller
+                void prepareToAnimate(); // show scroller
 
                 int fontSize = 18;
                 void sizeFactor(int key); // font size speed factor
                 void fontSizeChanged(); // font size speed factor
                 void speedFactor(int key); // adjust the timer interval
                 void alignmentFactor(int key); // adjust text alignment
+                void recalculateDisplayHeight();
                 
             protected:
                 void closeEvent(QCloseEvent* event) override;

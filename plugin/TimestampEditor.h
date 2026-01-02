@@ -32,7 +32,7 @@ namespace lmms
                 void keyPressEvent(QKeyEvent* event) override;
                 
                 private slots:
-                void insertElapsed();
+                void insertElapsedTime();
                 
             private:
                 
@@ -44,7 +44,6 @@ namespace lmms
                 QPushButton *btn;
                 QElapsedTimer timer;
                 
-                //VerticalMarquee* marquee = new VerticalMarquee();
                 QString getCurrentLine(QTextCursor cursor);
         };
     }

@@ -1,4 +1,4 @@
-## How does it work?
+# How does it work?
 
 <video src="https://github.com/user-attachments/assets/c9090b09-48de-46d7-b876-a4389e759afe"></video>
 An explainer recording. See it in full-screen mode.
@@ -20,11 +20,9 @@ make
 ./LRCScroll
 ```
 
-## As a plugin
+@see [plugin/](plugin/) folder to compile as a plugin for LMMS.
 
-@see [plugin/](plugin/) folder
-
-## Features / Progress
+# Features / Progress
 
 * [x] Prominent color, font and sizing
 * [x] Copy-paste shortcuts enabled
@@ -37,7 +35,7 @@ make
   * [ ] Hover on hide scroller
 * [ ] Button changes the text to tag current line or start a tag
 
-## Scroller Features
+# Scroller Features
 
 * [ ] Press __F10 key__ to start the scroller.
 * [ ] Focused in/out event handled
@@ -45,6 +43,15 @@ make
 * [ ] Smooth scroll at 30 fps, slow and easy to eyes
 * [ ] Complete lyrics scroll
 * [ ] Current timestamp to be highlighted
+* [ ] A lot of shortcuts enabled
 
-## Resources
+# Resources
+
 * https://en.wikipedia.org/wiki/LRC_(file_format)
+
+# ToDo
+
+* F9/F10 switch editor or scroller.
+* Timetag to align with LMMS Host
+* Speed to align wtih LMMS BMP + automations.
+* Synchronize keys between LMMS Play/Pause and scrolling habit.

@@ -8,7 +8,7 @@ ln -s [LRCScroll.lmms/plugin] LRCScroll
 # Add LRCScroll in the list
 ```
 
-## Scroller Features:
+# Scroller Features:
 
  * [ ] Ctrl+Plus: Zoom in text
  * [ ] Ctrl+Minus: Zoom out text

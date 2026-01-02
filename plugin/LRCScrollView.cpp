@@ -49,23 +49,23 @@ namespace lmms
             this->stack->setCurrentIndex(index%this->stack->count());
         }
 
-        void LRCScrollView::animate()
+        void LRCScrollView::prepareToAnimate()
         {
             marquee->setText(this->getText());
-            this->show(1);
+            //this->show(1);
         }
 
 
         void LRCScrollView::sizeFactor(int key)
         {
-            int speedFactor = 1;
+            int sizeChangeFactor = 1;
 
-            if(key == Qt::Key_Plus) speedFactor = 1; // abs(speedFactor);
-            if(key == Qt::Key_Minus) speedFactor = -1; // abs(speedFactor);
+            if(key == Qt::Key_Plus) sizeChangeFactor = 1;
+            if(key == Qt::Key_Minus) sizeChangeFactor = -1;
 
-            this->fontSize += speedFactor;
-            if(this->fontSize > 36) this->fontSize = 36;
-            if(this->fontSize < 8) this->fontSize = 8;
+            this->fontSize += sizeChangeFactor;
+            if(this->fontSize > 48) this->fontSize = 48;
+            if(this->fontSize < 9) this->fontSize = 9;
 
             this->fontSizeChanged();
         }
@@ -131,8 +131,9 @@ namespace lmms
         {
             QFont font = this->font();
             font.setPointSize(this->fontSize);
-            
             this->marquee->setFont(font);
+         
+            this->marquee->recalculateDisplayHeight();         
         }
 
         LRCScrollView::~LRCScrollView()

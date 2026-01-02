@@ -17,6 +17,7 @@
 #include <QTextBlock>
 #include <QString>
 #include <QKeyEvent>
+//#include <QObject>
 #include <QRegularExpression>
 
 #include "VerticalMarquee.h"
@@ -29,7 +30,8 @@ namespace lmms
         TimestampEditor::TimestampEditor(QWidget *parent = nullptr)
         {            
             QString message = \
-                "[00:00.00] Paste your Lyrics here.\n"\
+                "[00:00.00] Type or paste lyrics here.\n"\
+                "[00:00.00] \n"\
                 "[00:01.00] Press Ctrl+F9 for timer.\n"\
                 "[00:02.00] Press F9 for time tagging.\n"\
                 "[00:03.00] Press F9 again to tag next line.\n"\
@@ -37,8 +39,8 @@ namespace lmms
                 "[00:05.00] \n"\
                 "[00:06.00] Ctrl+PLUS/MINUS for zooming.\n"
                 "[00:07.00] LEFT/RIGHT for alignment.\n"
-                "\n"\
-                "[00:06.00] Do not forget to enjoy!"
+                "[00:08.00] \n"\
+                "[00:09.00] Do not forget to enjoy!"
             ;
             
             QFont font("Consolas", 16);
@@ -55,11 +57,11 @@ namespace lmms
             this->editor->setPalette(p);
             
             this->btn = new QPushButton("Start &Tagging", this);
+            connect(this->btn, &QPushButton::clicked, this, &TimestampEditor::insertElapsedTime);
             
             QVBoxLayout *layout = new QVBoxLayout(this);
             layout->addWidget(this->editor);
             layout->addWidget(this->btn);
-            connect(this->btn, &QPushButton::clicked, this, &TimestampEditor::insertElapsed);
         }
         
         void TimestampEditor::setLyrics(QString lyrics)
@@ -74,6 +76,7 @@ namespace lmms
             if(all)
             {
                 // regex difference: missing ^
+                // in whole lyrics block
                 lyrics.replace(QRegularExpression(this->timestampSignatureRegex), "");
             }
             else
@@ -82,37 +85,45 @@ namespace lmms
                 lyrics.replace(QRegularExpression("^"+this->timestampSignatureRegex), "");
             }
             
-            // @todo empty lines are NOT replaced with \n in the scroller!
             return lyrics;
         }
         
         
         void TimestampEditor::keyPressEvent(QKeyEvent* event)
         {
+            bool accepted = true;
             switch (event->key())
             {
-            // case Qt::Key_F10:
-            //      qDebug() << "F10 key pressed in TSE! Activating LRCScroll. Continue to ...";
-            //      this->hide();
-            //      Q_UNUSED(event);
-            //      break;
-            case Qt::Key_F9:
-                if(event->modifiers() == Qt::ControlModifier)
-                {
-                    // Ctrl+F9 restarts the timer
-                    // @todo Prevent abuse of the modifier key
-                    this->timer.restart();
-                }
+                case Qt::Key_Escape:
+                    this->hide();
+                    Q_UNUSED(event);
+                    accepted = false;
+                    break;
+                case Qt::Key_F10:
+                    qDebug() << "F10 key pressed in TSE! Activating LRCScroll. Continue to ...";
+                    Q_UNUSED(event);
+                    accepted = false;
+                    break;
+                case Qt::Key_F9:
+                    if(event->modifiers() == Qt::ControlModifier)
+                    {
+                        // Ctrl+F9 restarts the timer
+                        // @todo Prevent abuse of the modifier key
+                        this->timer.restart();
+                    }
 
-                qDebug() << "F9 key pressed!";
-                
-                this->insertElapsed();
-                event->accept();
-
-            default:
-                break;
+                    qDebug() << "F9 key pressed!";
+                    
+                    this->insertElapsedTime();
+                    event->accept();
+                    break;
+                default:
+                    accepted = false;
+                    break;
             }
 
+            if(accepted) event->accept();
+            //return QObject::eventFilter(this, event);
         }
 
         void TimestampEditor::stopTimer()
@@ -130,7 +141,7 @@ namespace lmms
             return line.trimmed();
         }
         
-        void TimestampEditor::insertElapsed()
+        void TimestampEditor::insertElapsedTime()
         {
             if (!this->timer.isValid())
             {

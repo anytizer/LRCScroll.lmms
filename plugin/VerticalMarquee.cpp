@@ -23,15 +23,25 @@ namespace lmms
             wf |= Qt::WindowStaysOnTopHint;
             parent->setWindowFlags(wf);
 
-            yOffset = height();
-            
+            yOffset = this->height();
+
             // total font height
-            QFontMetrics qfm = this->fontMetrics();
-            this->lineHeight = qfm.ascent() + qfm.height() + qfm.descent();
+            this->recalculateDisplayHeight();
             
             timer = new QTimer(this);
             connect(timer, &QTimer::timeout, this, &VerticalMarquee::updateScroll);
             timer->start(this->ticks);
+        }
+
+        void VerticalMarquee::recalculateDisplayHeight()
+        {
+            // disable this line
+            //yOffset = this->height(); // this->lineHeight * (this->text.count('\n')+1); // default: this line not preset
+
+            QFontMetrics qfm = this->fontMetrics();
+            this->lineHeight = qfm.ascent() + qfm.height() + qfm.descent() + qfm.leading();
+            
+            this->textHeight = this->lineHeight * (this->text.count('\n')+1); // + yOffset;
         }
 
         void VerticalMarquee::ticksChanged(int adjust)
@@ -59,16 +69,15 @@ namespace lmms
         void VerticalMarquee::setText(const QString &_text) {
             text = _text;
             
-            // disable this line
-            yOffset = this->height(); // this->lineHeight * (this->text.count('\n')+1); // default: this line not preset
-
             // double?? + view size's Y
-            this->textHeight = this->lineHeight * (this->text.count('\n')+1); // + yOffset;
+            // this->textHeight = this->lineHeight * (this->text.count('\n')+1); // + yOffset;
+            this->recalculateDisplayHeight();
             
             update();
         }
 
-        void VerticalMarquee::updateScroll() {
+        void VerticalMarquee::updateScroll()
+        {
             yOffset -= scrollSpeed;
             if (yOffset < -textHeight)
             {
@@ -78,7 +87,8 @@ namespace lmms
             update();
         }
 
-        void VerticalMarquee::paintEvent(QPaintEvent *event) {
+        void VerticalMarquee::paintEvent(QPaintEvent *event)
+        {
             QPainter painter(this);
             painter.setRenderHint(QPainter::Antialiasing);
 
@@ -101,7 +111,8 @@ namespace lmms
             painter.drawText(textRect, direction, text); // no wordwrap!
         }
 
-        void VerticalMarquee::showEvent(QShowEvent *event) {
+        void VerticalMarquee::showEvent(QShowEvent *event)
+        {
             QWidget::showEvent(event);
             yOffset = height(); // Initialize position when shown | default: height()
         }

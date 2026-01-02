@@ -18,14 +18,15 @@ namespace lmms
             Q_OBJECT
 
         public:
-            explicit VerticalMarquee(QWidget *parent = nullptr);
-            void setText(const QString &newText);
+            explicit VerticalMarquee(QWidget* parent = nullptr);
+            void setText(const QString& newText);
             void ticksChanged(int adjust);
             void alignmentDirectionChanged(int direction);
+            void recalculateDisplayHeight();
 
         protected:
-            void paintEvent(QPaintEvent *event) override;
-            void showEvent(QShowEvent *event) override;
+            void paintEvent(QPaintEvent* event) override;
+            void showEvent(QShowEvent* event) override;
 
         private slots:
             void updateScroll();
@@ -35,7 +36,7 @@ namespace lmms
             int lineHeight = 0; // font size + padding + margin | font + ascent + descent
             int textHeight = 0;
             int yOffset = 0;
-            int scrollSpeed = 2; // Move these pixels per frame
+            int scrollSpeed = 2; // pixels per frame - movement
             int ticks = 30; // fps? 30
 
             int alignmentDirection = 1; // AlignHCenter
@@ -45,7 +46,7 @@ namespace lmms
                 Qt::AlignmentFlag::AlignRight,
             };
             
-            QTimer *timer;
+            QTimer* timer;
             QFont font;
         };
     }
