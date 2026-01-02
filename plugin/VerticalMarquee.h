@@ -20,6 +20,7 @@ namespace lmms
         public:
             explicit VerticalMarquee(QWidget *parent = nullptr);
             void setText(const QString &newText);
+            void ticksChanged(int adjust);
 
         protected:
             void paintEvent(QPaintEvent *event) override;

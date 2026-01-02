@@ -39,6 +39,7 @@ namespace lmms
 
             // 'this' sets the filter owner
             LRCScrollKeyFilter* filter = new LRCScrollKeyFilter(this);
+            //filter->F10(); // switch scroll panel or editor mode
             this->installEventFilter(filter);
         }
 
@@ -47,6 +48,37 @@ namespace lmms
             qDebug() << "Showing stack # " << index;
             this->stack->setCurrentIndex(index%this->stack->count());
         }
+
+        void LRCScrollView::animate()
+        {
+            marquee->setText(this->getText());
+            this->show(1);
+        }
+
+
+        void LRCScrollView::sizeFactor(int key)
+        {
+            int speedFactor = 1;
+
+            if(key == Qt::Key_Plus) speedFactor = 1; // abs(speedFactor);
+            if(key == Qt::Key_Minus) speedFactor = -1; // abs(speedFactor);
+
+            this->fontSize += speedFactor;
+            if(this->fontSize > 36) this->fontSize = 36;
+            if(this->fontSize < 8) this->fontSize = 8;
+
+            this->fontSizeChanged();
+        }
+
+        void LRCScrollView::speedFactor(int key)
+        {
+            int adjust = 0;
+            if(key == Qt::Key_Up) adjust = -5;
+            if(key == Qt::Key_Down) adjust = 5;
+
+            this->marquee->ticksChanged(adjust);
+        }
+
 
         void LRCScrollView::setupTimestampEditor(int width, int height)
         {
@@ -72,21 +104,31 @@ namespace lmms
 
         void LRCScrollView::setupMarquee(int width, int height)
         {
+            this->marquee = new VerticalMarquee(this);
+            this->marquee->setWindowTitle("LRCScroll"); // transparent & frameless
+            this->marquee->resize(width, height);
+            
             QFont font = QFont();
             font.setFamily("Helvatica");
             font.setFamilies({"Consolas", "Helvatica"});
             font.setBold(true);
-            font.setPointSize(18);
+            font.setPointSize(this->fontSize);
+            this->marquee->setFont(font);
+        }
+
+        void LRCScrollView::fontSizeChanged()
+        {
+            QFont font = this->font();
+            font.setPointSize(this->fontSize);
             
-            this->marquee = new VerticalMarquee(this);
-            this->marquee->resize(width, height);
-            this->marquee->setWindowTitle("LRCScroll"); // transparent & frameless
             this->marquee->setFont(font);
         }
 
         LRCScrollView::~LRCScrollView()
         {
         }
+
+
 
 
         // void LRCScrollView::focusInEvent(QFocusEvent *event)
@@ -142,38 +184,38 @@ namespace lmms
         //     // }
         // }
 
-        void LRCScrollView::keyPressEvent(QKeyEvent* event)
-        {
-            bool accepted = true;
-            switch(event->key())
-            {
-            case Qt::Key_F10:
-                // hide TSE
-                qDebug() << "F10 from LRCScrollView...";
-                //this->layout->removeWidget(this->tse);
+        // void LRCScrollView::keyPressEvent(QKeyEvent* event)
+        // {
+        //     bool accepted = true;
+        //     switch(event->key())
+        //     {
+        //     case Qt::Key_F10:
+        //         // hide TSE
+        //         qDebug() << "F10 from LRCScrollView...";
+        //         //this->layout->removeWidget(this->tse);
  
-                marquee->setText(this->getText());
-                this->show(1);
-                //this->stack->setCurrentIndex(index);
+        //         marquee->setText(this->getText());
+        //         this->show(1);
+        //         //this->stack->setCurrentIndex(index);
 
-                //marquee->show();
+        //         //marquee->show();
 
-                // this->clearLayout();
-                // this->layout->addWidget(marquee);
-                // this->setLayout(this->layout);
-                break;
-            case Qt::Key_Escape:
-                // close the window and show editor
-                qDebug() << "ESC from LRCScrollView.";
-                this->show(0);
-                break;
-            default:
-                accepted = false;    
-                break;
-            }
+        //         // this->clearLayout();
+        //         // this->layout->addWidget(marquee);
+        //         // this->setLayout(this->layout);
+        //         break;
+        //     case Qt::Key_Escape:
+        //         // close the window and show editor
+        //         qDebug() << "ESC from LRCScrollView.";
+        //         this->show(0);
+        //         break;
+        //     default:
+        //         accepted = false;    
+        //         break;
+        //     }
 
-            if(accepted) event->accept();
-        }
+        //     if(accepted) event->accept();
+        // }
 
         QString LRCScrollView::getText()
         {

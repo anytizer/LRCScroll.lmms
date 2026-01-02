@@ -11,6 +11,8 @@
 #include <QKeyEvent>
 #include <QDebug>
 
+#include "LRCScrollView.h"
+
 namespace lmms
 {
     namespace gui
@@ -18,9 +20,13 @@ namespace lmms
         class LRCScrollKeyFilter : public QObject
         {
             Q_OBJECT // Place at the top of the class
+            LRCScrollView* view;
 
         public:
-            explicit LRCScrollKeyFilter(QObject* parent = nullptr) : QObject(parent){}
+            explicit LRCScrollKeyFilter(QObject* parent = nullptr) : QObject(parent)
+            {
+                this->view = (LRCScrollView*)parent;
+            }
 
         protected:
             bool eventFilter(QObject* obj, QEvent* event) override;

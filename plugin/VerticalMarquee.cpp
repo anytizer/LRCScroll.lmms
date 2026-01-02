@@ -34,6 +34,16 @@ namespace lmms
             timer->start(this->ticks);
         }
 
+        void VerticalMarquee::ticksChanged(int adjust)
+        {
+            this->ticks += adjust;
+ 
+            if(this->ticks > 200) this->ticks = 200;
+            if(this->ticks < 20) this->ticks = 20;
+ 
+            this->timer->setInterval(this->ticks);
+        }
+
         void VerticalMarquee::setText(const QString &_text) {
             text = _text;
             

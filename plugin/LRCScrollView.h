@@ -44,19 +44,30 @@ namespace lmms
                 void setupTimestampEditor(int width, int height);
                 void setupMarquee(int width, int height);
                 
+                
                 //void clearLayout();
-                void show(int index); // widget sequence in the stack
-            
-            public:
+                
+                public:
                 LRCScrollView(LRCScroll* plugin);
                 ~LRCScrollView();
+                
+                void show(int index); // widget sequence in the stack
+                void animate(); // show scroller
 
+                int fontSize = 18;
+                void sizeFactor(int key); // font size speed factor
+                void fontSizeChanged(); // font size speed factor
+
+                void speedFactor(int key); // adjust the timer interval
+                
             protected:
                 void closeEvent(QCloseEvent* event) override;
                 // void focusInEvent(QFocusEvent* event) override;
                 // void focusOutEvent(QFocusEvent* event) override;
                 // void changeEvent(QEvent *event) override;
-                void keyPressEvent(QKeyEvent* event) override;
+                
+                // @see LRCScrollKeyFilter
+                //void keyPressEvent(QKeyEvent* event) override;
         };
     }
 }

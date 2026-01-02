@@ -35,6 +35,7 @@ namespace lmms
                 "[00:03.00] Press F9 again to tag next line.\n"\
                 "[00:04.00] Press F10 for LRCScroll.\n"\
                 "[00:05.00] \n"\
+                "[00:06.00] Ctrl+PLUS/MINUS for zooming.\n"
                 "[00:06.00] Do not forget to enjoy!"
             ;
             
@@ -153,10 +154,10 @@ namespace lmms
             // We use getCurrentLine to get the "clean" text length vs current block length
             QString fullLineText = cursor.block().text();
             QString cleanLineText = this->getCurrentLine(cursor);
-            int oldTsLength = fullLineText.length() - cleanLineText.length();
+            //int oldTsLength = fullLineText.length() - cleanLineText.length();
             
             // Calculate relative position: where is the cursor relative to the lyrics?
-            int relativePosInLyrics = qMax(0, cursor.positionInBlock() - oldTsLength);
+            //int relativePosInLyrics = qMax(0, cursor.positionInBlock() - oldTsLength);
         
             cursor.beginEditBlock();
             
