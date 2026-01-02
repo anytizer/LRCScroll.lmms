@@ -53,8 +53,8 @@ namespace lmms
 
     QString LRCScroll::nodeName() const
     {
-        //return lrcscroll_plugin_descriptor.name;
-        return "lrcscroll";
+        return lrcscroll_plugin_descriptor.name;
+        //return "lrcscroll";
     }
 
     PluginView* LRCScroll::instantiateView(QWidget*)
@@ -64,14 +64,10 @@ namespace lmms
 
     void LRCScroll::saveSettings(QDomDocument& _doc, QDomElement& _this)
     {
-        //this->
-        //this->lyrics.saveSettings( _doc, _this, "lyrics" );
-        _this.setAttribute("lyrics", "Hi hi hi");
     }
     
     void LRCScroll::loadSettings(const QDomElement& _this)
     {
-        _this.attribute("lyrics", "Hi Hi Hi!");
     }
 } // namespace lmms
 

@@ -25,25 +25,27 @@ namespace lmms
             public:
                 TimestampEditor(QWidget *parent);
                 void setLyrics(QString lyrics);
+                QString getLyrics(bool all);
                 void stopTimer();
                 
-            protected:
+                protected:
                 void keyPressEvent(QKeyEvent* event) override;
                 
-            private slots:
+                private slots:
                 void insertElapsed();
                 
             private:
                 
                 Q_OBJECT
                 
+                const QString timestampSignatureRegex = "\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\][\\s]{1}";
+                
                 QPlainTextEdit *editor;
                 QPushButton *btn;
                 QElapsedTimer timer;
+                
+                //VerticalMarquee* marquee = new VerticalMarquee();
                 QString getCurrentLine(QTextCursor cursor);
-                QString getWholeLyricsOnly(); // whole text without timestamp
-
-                VerticalMarquee* marquee = new VerticalMarquee();
         };
     }
 }

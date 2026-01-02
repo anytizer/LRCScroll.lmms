@@ -8,10 +8,12 @@
 
 #include "LRCScroll.h"
 #include "LRCScrollView.h"
+#include "VerticalMarquee.h"
 #include "TimestampEditor.h"
 
 #include "ToolPluginView.h"
 
+#include <QStackedWidget>
 #include <QHBoxLayout>
 #include <QCloseEvent>
 
@@ -24,23 +26,36 @@ namespace lmms
             private:
                 Q_OBJECT
 
+                // window geometry
+                int width = 600;
+                int height = 400;
+
                 LRCScroll* m_plugin;
                 QHBoxLayout* layout = new QHBoxLayout();
+                QStackedWidget* stack; //  = new QStackedWidget();
                 
-                TimestampEditor* tse = new TimestampEditor(nullptr);
+                // stacked widgets
+                TimestampEditor* tse;// = new TimestampEditor(nullptr);
+                VerticalMarquee* marquee;
 
-                void clearLayout();
+                QString getText();
+                
+                void setupParent(int width, int height);
+                void setupTimestampEditor(int width, int height);
+                void setupMarquee(int width, int height);
+                
+                //void clearLayout();
+                void show(int index); // widget sequence in the stack
             
             public:
                 LRCScrollView(LRCScroll* plugin);
                 ~LRCScrollView();
-                void setFramed(bool tf);
-            
+
             protected:
                 void closeEvent(QCloseEvent* event) override;
-                void focusInEvent(QFocusEvent* event) override;
-                void focusOutEvent(QFocusEvent* event) override;
-                void changeEvent(QEvent *event) override;
+                // void focusInEvent(QFocusEvent* event) override;
+                // void focusOutEvent(QFocusEvent* event) override;
+                // void changeEvent(QEvent *event) override;
                 void keyPressEvent(QKeyEvent* event) override;
         };
     }

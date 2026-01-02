@@ -27,14 +27,25 @@ namespace lmms
     namespace gui
     {
         TimestampEditor::TimestampEditor(QWidget *parent = nullptr)
-        {
-            QFont font("Consolas", 18);
-
+        {            
+            QString message = \
+                "[00:00.00] Paste your Lyrics here.\n"\
+                "[00:01.00] Press Ctrl+F9 for timer.\n"\
+                "[00:02.00] Press F9 for time tagging.\n"\
+                "[00:03.00] Press F9 again to tag next line.\n"\
+                "[00:04.00] Press F10 for LRCScroll.\n"\
+                "[00:05.00] \n"\
+                "[00:06.00] Do not forget to enjoy!"
+            ;
+            
+            QFont font("Consolas", 16);
             this->editor = new QPlainTextEdit(this);
             this->editor->setFont(font);
-            this->editor->setPlainText("[00:00.00] Press F9 here...");
-            this->editor->setPlaceholderText("[00:00.00] Press F9 here...");
+            this->editor->setPlainText(message);
+            this->editor->setPlaceholderText(message);
             this->editor->setContextMenuPolicy(Qt::NoContextMenu);
+            this->editor->setFrameStyle(QFrame::NoFrame);
+            this->editor->setLineWrapMode(QPlainTextEdit::NoWrap);
 
             QPalette p = this->editor->palette();
             p.setColor(QPalette::Text, Qt::magenta);
@@ -48,10 +59,28 @@ namespace lmms
             connect(this->btn, &QPushButton::clicked, this, &TimestampEditor::insertElapsed);
         }
         
-        
         void TimestampEditor::setLyrics(QString lyrics)
         {
             this->editor->setPlainText(lyrics);
+        }
+
+        QString TimestampEditor::getLyrics(bool all=false)
+        {
+            QString lyrics = this->editor->toPlainText();
+            
+            if(all)
+            {
+                // regex difference: missing ^
+                lyrics.replace(QRegularExpression(this->timestampSignatureRegex), "");
+            }
+            else
+            {
+                // just one line change
+                lyrics.replace(QRegularExpression("^"+this->timestampSignatureRegex), "");
+            }
+            
+            // @todo empty lines are NOT replaced with \n in the scroller!
+            return lyrics;
         }
         
         
@@ -59,23 +88,11 @@ namespace lmms
         {
             switch (event->key())
             {
-            // case Qt::Key_F10:
-            //     // scroll the lyrics
-            //     marquee->resize(600, 250);
-            //     marquee->setWindowTitle("LRCScroll");
-            //     //marquee->setText(this->getWholeLyricsOnly());
-            //     marquee->setText(
-            //         "This is a custom vertical scrolling message!"
-            //         "\nMultilined text!"
-            //         "\n"
-            //         "\nWish somebody happy birthday!"
-            //         "\nThis evening."
-            //     );
-            //     marquee->show();
-                
-            //     qDebug() << "F10 key pressed! Activating LRCScroll.";
-            //     event->accept();
-            //     break;
+            case Qt::Key_F10:
+                 qDebug() << "F10 key pressed in TSE! Activating LRCScroll. Continue to ...";
+                 this->hide();
+                 Q_UNUSED(event);
+                 break;
             case Qt::Key_F9:
                 if(event->modifiers() == Qt::ControlModifier)
                 {
@@ -99,20 +116,14 @@ namespace lmms
         {
             this->timer = QElapsedTimer();
         }
-
-        QString TimestampEditor::getWholeLyricsOnly()
-        {
-            QString lyrics = "Happy birthday to you"; //editor->getPlainText();
-            return lyrics;
-        }
         
         QString TimestampEditor::getCurrentLine(QTextCursor cursor)
         {
             cursor.select(QTextCursor::BlockUnderCursor);
             QString line = cursor.selectedText().trimmed();
             
-            // throw out signature timestamp
-            line.replace(QRegularExpression("^\\[\\d{2}\\:\\d{2}\\.\\d{2,}\\]\\s+"), "");
+            // throw out signature timestamp at the front of the text ^
+            line.replace(QRegularExpression("^"+this->timestampSignatureRegex), "");
             return line.trimmed();
         }
         

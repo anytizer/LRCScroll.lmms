@@ -10,8 +10,7 @@
 #include "LRCScrollView.h"
 #include "VerticalMarquee.h"
 #include "TimestampEditor.h"
-
-#include <QLayoutItem>
+#include "LRCScrollKeyFilter.h"
 
 namespace lmms
 {
@@ -21,25 +20,49 @@ namespace lmms
         
         LRCScrollView::LRCScrollView(LRCScroll* plugin): ToolPluginView(plugin), m_plugin(plugin)
         {
-            int width = 600;
-            int height = 400;
-            
-            this->clearLayout();
-            
-            //tse->setFixedWidth(width);
-            //tse->setFixedHeight(height);
-            this->layout->addWidget(tse);
-            this->setLayout(this->layout);
-            this->setWindowOpacity(.3);
-
+            this->setFixedSize(this->width, this->height);
             this->hide();
-			this->setFixedSize(width, height);
-			QWidget* parent = parentWidget();
+			
+            this->setupTimestampEditor(this->width, this->height);
+            this->setupMarquee(this->width, this->height);
+            this->setupParent(this->width, this->height);
+            
+            // prepare the stack
+            this->stack = new QStackedWidget();
+            this->stack->addWidget(this->tse);
+            this->stack->addWidget(this->marquee);
+            this->show(0);
+
+            QHBoxLayout* layout = new QHBoxLayout();
+            layout->addWidget(this->stack);
+            this->setLayout(layout);
+
+            // 'this' sets the filter owner
+            LRCScrollKeyFilter* filter = new LRCScrollKeyFilter(this);
+            this->installEventFilter(filter);
+        }
+
+        void LRCScrollView::show(int index)
+        {
+            qDebug() << "Showing stack # " << index;
+            this->stack->setCurrentIndex(index%this->stack->count());
+        }
+
+        void LRCScrollView::setupTimestampEditor(int width, int height)
+        {
+            this->tse = new TimestampEditor(nullptr);
+            this->tse->resize(width, height);
+        }
+
+        void LRCScrollView::setupParent(int width, int height)
+        {
+            QWidget* parent = this->parentWidget();
 			if(parent!=nullptr)
 			{
                 parent->hide();
 				parent->resize(width, height);
-				Qt::WindowFlags flags = parent->windowFlags();
+				
+                Qt::WindowFlags flags = parent->windowFlags();
 				//flags |= Qt::MSWindowsFixedSizeDialogHint;
 				flags &= ~Qt::WindowMaximizeButtonHint;
 				flags |= Qt::WindowStaysOnTopHint;
@@ -47,42 +70,56 @@ namespace lmms
             }
         }
 
+        void LRCScrollView::setupMarquee(int width, int height)
+        {
+            QFont font = QFont();
+            font.setFamily("Helvatica");
+            font.setFamilies({"Consolas", "Helvatica"});
+            font.setBold(true);
+            font.setPointSize(18);
+            
+            this->marquee = new VerticalMarquee(this);
+            this->marquee->resize(width, height);
+            this->marquee->setWindowTitle("LRCScroll"); // transparent & frameless
+            this->marquee->setFont(font);
+        }
+
         LRCScrollView::~LRCScrollView()
         {
-
         }
 
-        void LRCScrollView::focusInEvent(QFocusEvent *event)
-        {
-            Q_UNUSED(event);
-            qDebug() << "Window gained focus. Changing to framed.";
-        }
 
-        void LRCScrollView::focusOutEvent(QFocusEvent *event)
-        {
-            Q_UNUSED(event);
-            qDebug() << "Window lost focus. Changing to frameless.";
-        }
+        // void LRCScrollView::focusInEvent(QFocusEvent *event)
+        // {
+        //     Q_UNUSED(event);
+        //     qDebug() << "Window gained focus. Changing to framed.";
+        // }
 
-        void LRCScrollView::changeEvent(QEvent *event)
-        {
-            // QWidget* parent = parentWidget();
-            // if (event->type() == QEvent::ActivationChange)
-            // {
-            //     if (parent->isActiveWindow())
-            //     {
-            //         // Fully opaque when focused
-            //         parent->setWindowOpacity(1.0);
-            //         this->setWindowOpacity(1.0);
-            //     }
-            //     else
-            //     {
-            //         // Transparent when focus is lost (e.g., 50% opacity)
-            //         parent->setWindowOpacity(0.3);
-            //         this->setWindowOpacity(0.3);
-            //     }
-            // }
-        }
+        // void LRCScrollView::focusOutEvent(QFocusEvent *event)
+        // {
+        //     Q_UNUSED(event);
+        //     qDebug() << "Window lost focus. Changing to frameless.";
+        // }
+
+        // void LRCScrollView::changeEvent(QEvent *event)
+        // {
+        //     // QWidget* parent = parentWidget();
+        //     // if (event->type() == QEvent::ActivationChange)
+        //     // {
+        //     //     if (parent->isActiveWindow())
+        //     //     {
+        //     //         // Fully opaque when focused
+        //     //         parent->setWindowOpacity(1.0);
+        //     //         this->setWindowOpacity(1.0);
+        //     //     }
+        //     //     else
+        //     //     {
+        //     //         // Transparent when focus is lost (e.g., 50% opacity)
+        //     //         parent->setWindowOpacity(0.3);
+        //     //         this->setWindowOpacity(0.3);
+        //     //     }
+        //     // }
+        // }
 
         void LRCScrollView::closeEvent(QCloseEvent* event)
         {
@@ -90,38 +127,57 @@ namespace lmms
             qDebug() << "LRC Timer should be stopped!";
         }
 
-        void LRCScrollView::clearLayout()
-        {
-            if (!this->layout) return;
+        // void LRCScrollView::clearLayout()
+        // {
+        //     // if (!this->layout) return;
 
-            QLayoutItem *item;
-            while ((item = this->layout->takeAt(0)) != nullptr)
-            {
-                if (item->widget())
-                {
-                    item->widget()->deleteLater();
-                }
-                delete item;
-            }
-        }
+        //     // QLayoutItem *item;
+        //     // while ((item = this->layout->takeAt(0)) != nullptr)
+        //     // {
+        //     //     if (item->widget())
+        //     //     {
+        //     //         item->widget()->deleteLater();
+        //     //     }
+        //     //     delete item;
+        //     // }
+        // }
 
         void LRCScrollView::keyPressEvent(QKeyEvent* event)
         {
-            if(event->key() == Qt::Key_F10)
+            bool accepted = true;
+            switch(event->key())
             {
-                VerticalMarquee* marquee = new VerticalMarquee();
-                marquee->resize(500, 200);
-                marquee->setWindowTitle("LRCScroll");
-                //marquee->setText(this->getWholeLyricsOnly());
-                marquee->setText(
-                    "Happy birthday to you!"
-                    "\nHappy birthday to you!"
-                    "\n"
-                    "\nHappy birthday dear ..."
-                    "\nHappy birthday to you!"
-                );
-                marquee->show();
+            case Qt::Key_F10:
+                // hide TSE
+                qDebug() << "F10 from LRCScrollView...";
+                //this->layout->removeWidget(this->tse);
+ 
+                marquee->setText(this->getText());
+                this->show(1);
+                //this->stack->setCurrentIndex(index);
+
+                //marquee->show();
+
+                // this->clearLayout();
+                // this->layout->addWidget(marquee);
+                // this->setLayout(this->layout);
+                break;
+            case Qt::Key_Escape:
+                // close the window and show editor
+                qDebug() << "ESC from LRCScrollView.";
+                this->show(0);
+                break;
+            default:
+                accepted = false;    
+                break;
             }
+
+            if(accepted) event->accept();
+        }
+
+        QString LRCScrollView::getText()
+        {
+            return this->tse->getLyrics(true);
         }
     }
 }

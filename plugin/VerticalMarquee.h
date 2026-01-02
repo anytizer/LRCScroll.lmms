@@ -1,3 +1,8 @@
+/**
+ * VerticalMarquee.h
+ * (c) 2026 Bimal Poudel <@anytizer:github>
+ */
+
 #ifndef LMMS_PLUGINS_LRCSCROLL_VERTICALMARQUEE_H
 #define LMMS_PLUGINS_LRCSCROLL_VERTICALMARQUEE_H
 
@@ -24,10 +29,14 @@ namespace lmms
             void updateScroll();
 
         private:
-            QString text;
-            int yOffset;
+            QString text = "";
+            int lineHeight = 0; // font size + padding + margin | font + ascent + descent
+            int textHeight = 0;
+            int yOffset = 0;
+            int scrollSpeed = 2; // Move these pixels per frame
+            int ticks = 30; // fps? 30
             QTimer *timer;
-            int scrollSpeed; // Pixels per frame
+            QFont font;
         };
     }
 }

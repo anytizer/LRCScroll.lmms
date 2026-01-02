@@ -32,7 +32,6 @@ namespace lmms
         
         private:
             QString lyrics = "";
-            //friend class gui::LRCScrollView;
     };
 }
 
