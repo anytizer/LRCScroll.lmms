@@ -36,6 +36,8 @@ namespace lmms
                 "[00:04.00] Press F10 for LRCScroll.\n"\
                 "[00:05.00] \n"\
                 "[00:06.00] Ctrl+PLUS/MINUS for zooming.\n"
+                "[00:07.00] LEFT/RIGHT for alignment.\n"
+                "\n"\
                 "[00:06.00] Do not forget to enjoy!"
             ;
             
@@ -89,11 +91,11 @@ namespace lmms
         {
             switch (event->key())
             {
-            case Qt::Key_F10:
-                 qDebug() << "F10 key pressed in TSE! Activating LRCScroll. Continue to ...";
-                 this->hide();
-                 Q_UNUSED(event);
-                 break;
+            // case Qt::Key_F10:
+            //      qDebug() << "F10 key pressed in TSE! Activating LRCScroll. Continue to ...";
+            //      this->hide();
+            //      Q_UNUSED(event);
+            //      break;
             case Qt::Key_F9:
                 if(event->modifiers() == Qt::ControlModifier)
                 {

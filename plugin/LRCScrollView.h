@@ -47,7 +47,7 @@ namespace lmms
                 
                 //void clearLayout();
                 
-                public:
+            public:
                 LRCScrollView(LRCScroll* plugin);
                 ~LRCScrollView();
                 
@@ -57,8 +57,8 @@ namespace lmms
                 int fontSize = 18;
                 void sizeFactor(int key); // font size speed factor
                 void fontSizeChanged(); // font size speed factor
-
                 void speedFactor(int key); // adjust the timer interval
+                void alignmentFactor(int key); // adjust text alignment
                 
             protected:
                 void closeEvent(QCloseEvent* event) override;

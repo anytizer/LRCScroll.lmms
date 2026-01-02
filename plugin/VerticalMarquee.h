@@ -21,6 +21,7 @@ namespace lmms
             explicit VerticalMarquee(QWidget *parent = nullptr);
             void setText(const QString &newText);
             void ticksChanged(int adjust);
+            void alignmentDirectionChanged(int direction);
 
         protected:
             void paintEvent(QPaintEvent *event) override;
@@ -36,6 +37,14 @@ namespace lmms
             int yOffset = 0;
             int scrollSpeed = 2; // Move these pixels per frame
             int ticks = 30; // fps? 30
+
+            int alignmentDirection = 1; // AlignHCenter
+            std::vector<Qt::AlignmentFlag> directions = {
+                Qt::AlignmentFlag::AlignLeft,
+                Qt::AlignmentFlag::AlignHCenter,
+                Qt::AlignmentFlag::AlignRight,
+            };
+            
             QTimer *timer;
             QFont font;
         };

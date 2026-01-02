@@ -79,6 +79,17 @@ namespace lmms
             this->marquee->ticksChanged(adjust);
         }
 
+        void LRCScrollView::alignmentFactor(int key)
+        {
+            int direction = 0;
+            if(key == Qt::LeftArrow) direction -= 1;
+            if(key == Qt::Key_Left) direction -= 1;
+            if(key == Qt::RightArrow) direction += 1;
+            if(key == Qt::Key_Right) direction += 1;
+
+            this->marquee->alignmentDirectionChanged(direction);
+        }
+
 
         void LRCScrollView::setupTimestampEditor(int width, int height)
         {

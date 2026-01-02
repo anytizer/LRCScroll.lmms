@@ -38,10 +38,22 @@ namespace lmms
         {
             this->ticks += adjust;
  
-            if(this->ticks > 200) this->ticks = 200;
-            if(this->ticks < 20) this->ticks = 20;
+            if(this->ticks > 100) this->ticks = 100;
+            if(this->ticks < 30) this->ticks = 30;
  
+            // this->timer->clearInterval(); // ??
             this->timer->setInterval(this->ticks);
+        }
+
+        void VerticalMarquee::alignmentDirectionChanged(int direction)
+        {
+            // 0 = left
+            // 1 = middle
+            // 2 = right
+            this->alignmentDirection += direction;
+
+            if(this->alignmentDirection < 0) this->alignmentDirection = 0;
+            if(this->alignmentDirection > 2) this->alignmentDirection = 2;
         }
 
         void VerticalMarquee::setText(const QString &_text) {
@@ -85,7 +97,8 @@ namespace lmms
             QRect textRect = rect();
             textRect.moveTop(yOffset);
             
-            painter.drawText(textRect, Qt::AlignHCenter, text); // no wordwrap!
+            Qt::AlignmentFlag direction = this->directions[this->alignmentDirection%3]; // Qt::AlignHCenter;
+            painter.drawText(textRect, direction, text); // no wordwrap!
         }
 
         void VerticalMarquee::showEvent(QShowEvent *event) {
