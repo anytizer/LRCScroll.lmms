@@ -1,1 +1,0 @@
-# Snippets generated with AI
