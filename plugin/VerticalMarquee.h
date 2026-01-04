@@ -37,7 +37,7 @@ namespace lmms
             int textHeight = 0;
             int yOffset = 0;
             int scrollSpeed = 2; // pixels per frame - movement
-            int ticks = 30; // fps? 30
+            int ticks = 100; // fps? 30
 
             int alignmentDirection = 1; // AlignHCenter
             std::vector<Qt::AlignmentFlag> directions = {
